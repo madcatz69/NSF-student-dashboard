@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Rewards | NSF Competency Program</title>
+    <!-- Use Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========================
+           RESET & VARIABLES
+           ======================== */
+        :root {
+            --color-primary: #347363;
+            --color-secondary: #0f172a;
+            --color-accent-teal: #26A69A;
+            --color-accent-orange: #F57C00;
+            --color-accent-purple: #8E24AA;
+            --color-accent-pink: #D81B60;
+            --color-gold: #FFD700;
+
+            --glass-bg: rgba(255, 255, 255, 0.94);
+            --glass-border: 2px solid rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.1), 0 5px 10px -2px rgba(0, 0, 0, 0.05);
+            --card-hover-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            min-height: 100vh;
+            color: #334155;
+            overflow-x: hidden;
+            background:
+                radial-gradient(at 0% 0%, hsla(172, 65%, 85%, 1) 0px, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(230, 45%, 92%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(177, 63%, 90%, 1) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(260, 50%, 95%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 50%, hsla(172, 65%, 88%, 1) 0px, transparent 50%);
+            background-size: 150% 150%;
+            animation: meshFlow 25s ease infinite alternate;
+        }
+
+        @keyframes meshFlow {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* HEADER */
+        .header {
+            background: rgba(52, 115, 99, 0.95);
+            backdrop-filter: blur(16px);
+            height: 80px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 0 40px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateX(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-center {
+            font-weight: 950;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* HERO SECTION */
+        .rewards-hero {
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .rewards-hero h1 {
+            font-size: 5rem;
+            font-weight: 950;
+            color: #0f172a;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            line-height: 1;
+            background: linear-gradient(135deg, #0f172a 0%, #347363 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .rewards-hero p {
+            font-size: 1.5rem;
+            color: #475569;
+            font-weight: 500;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* BADGE GRID */
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 60px;
+            margin-bottom: 120px;
+            justify-items: center;
+        }
+
+        .badge-card {
+            background: var(--glass-bg);
+            border: var(--glass-border);
+            border-radius: 40px;
+            padding: 50px 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .badge-card:hover {
+            transform: translateY(-20px) scale(1.05);
+            box-shadow: var(--card-hover-shadow);
+            border-color: rgba(52, 115, 99, 0.4);
+        }
+
+        /* Shine Effect */
+        .badge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            transition: 0.8s;
+        }
+
+        .badge-card:hover::before {
+            left: 150%;
+        }
+
+        .badge-img-container {
+            width: 220px;
+            height: 220px;
+            margin-bottom: 30px;
+            position: relative;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.2));
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .badge-card:hover .badge-img-container {
+            transform: scale(1.2) rotate(8deg);
+        }
+
+        .badge-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .badge-title {
+            font-weight: 950;
+            font-size: 1.8rem;
+            color: #0f172a;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .badge-status {
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .status-unlocked {
+            color: var(--color-primary);
+        }
+
+        .status-locked {
+            color: #94a3b8;
+        }
+
+        /* Locked State - Target specific elements */
+        .badge-locked {
+            cursor: not-allowed !important;
+            pointer-events: none;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .badge-locked .badge-img-container,
+        .badge-locked .badge-title {
+            filter: grayscale(1) opacity(0.5);
+        }
+
+        .badge-locked .badge-status {
+            color: #94a3b8;
+            opacity: 0.7;
+        }
+
+        .badge-criteria-container {
+            width: 100%;
+            margin-top: auto;
+            padding-top: 30px;
+            border-top: 3px dashed #e2e8f0;
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+
+        .criteria-text {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #334155;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 15px 0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent-teal));
+            border-radius: 50px;
+            transition: width 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .progress-text {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--color-accent-orange);
+            letter-spacing: 0.5px;
+        }
+
+        .badge-unlocked-msg {
+            color: var(--color-primary);
+            font-weight: 900;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-5px);
+            }
+
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 50px;
+            padding: 60px;
+            text-align: center;
+            position: relative;
+            transform: translateY(100px) scale(0.8);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.4);
+            border: 10px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: #f1f5f9;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .close-modal:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .confetti {
+            position: absolute;
+            z-index: 1;
+            top: -50px;
+            animation: fall 4s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(1080deg);
+            }
+        }
+
+        .modal-badge-img {
+            width: 260px;
+            height: 260px;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.3));
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-title {
+            font-size: 2.8rem;
+            font-weight: 950;
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+
+        .modal-desc {
+            font-size: 1.4rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .modal-btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 20px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 15px 30px -5px rgba(52, 115, 99, 0.5);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -5px rgba(52, 115, 99, 0.6);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <a href="stu5.html?view=dashboard" class="back-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to Dashboard
+            </a>
+        </div>
+        <div class="header-center">My Rewards</div>
+        <div></div>
+    </header>
+
+    <div class="container">
+        <div class="rewards-hero">
+            <h1>Your Trophy Case</h1>
+            <p>Celebrate your learning milestones! Click any unlocked badge to view and celebrate your achievement.</p>
+        </div>
+
+        <div class="badge-grid" id="badgeGrid">
+            <!-- Dynamic Content -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="badgeModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <div id="confettiContainer"></div>
+            <img src="" alt="Badge" class="modal-badge-img" id="modalImg">
+            <h2 class="modal-title" id="modalTitle">Badge Title</h2>
+            <p class="modal-desc" id="modalDesc">Description goes here.</p>
+            <button class="modal-btn" onclick="closeModal()">Awesome!</button>
+        </div>
+    </div>
+
+    <script>
+        // MOCK USER DATA
+        const studentProfile = {
+            assessmentsAttempted: 2,
+            maxAssessments: 6,
+            streak: 2,
+            scores: [
+                { subject: 'Math', percent: 85 },
+                { subject: 'Science', percent: 72 },
+                { subject: 'English', percent: 90 }
+            ]
+        };
+
+        // BADGE CONFIG (Fixed Mapping & Enhanced Text)
+        const badges = [
+            {
+                id: 'all_rounder',
+                title: 'All Rounder',
+                img: 'assets/badges/badge_all_rounder.png',
+                desc: 'Secured 100% score in an assessment across English, Maths, and Science! You are a true champion.',
+                criteria: 'Secure a perfect 100% score in any assessment.',
+                check: (p) => p.scores.some(s => s.percent === 100),
+                progressText: (p) => {
+                    const max = Math.max(...p.scores.map(s => s.percent));
+                    return `Highest: ${max}% (Need 100%)`;
+                },
+                progressPercent: (p) => Math.max(...p.scores.map(s => s.percent))
+            },
+            {
+                id: 'excellent',
+                title: 'Steady Rockstar',
+                img: 'assets/badges/badge_excellent.png',
+                desc: 'Secured between 80% to 99% in an assessment. Outstanding academic performance!',
+                criteria: 'Score between 80% and 99% in any assessment.',
+                check: (p) => p.scores.some(s => s.percent >= 80 && s.percent < 100),
+                progressText: (p) => {
+                    const max = Math.max(...p.scores.map(s => s.percent));
+                    return max >= 80 ? "Unlocked!" : `Highest Score: ${max}%`;
+                },
+                progressPercent: (p) => Math.min((Math.max(...p.scores.map(s => s.percent)) / 80) * 100, 100)
+            },
+            {
+                id: 'good_one',
+                title: 'Assessment All Star',
+                img: 'assets/badges/badge_good_one.png',
+                desc: 'Secured between 60% to 79% score in an assessment. A solid effort!',
+                criteria: 'Score between 60% and 79% in any assessment.',
+                check: (p) => p.scores.some(s => s.percent >= 60 && s.percent < 80),
+                progressText: (p) => "Awesome! Keep pushing for higher scores!",
+                progressPercent: (p) => 100
+            },
+            {
+                id: 'steady_rockstar',
+                title: 'Good One',
+                img: 'assets/badges/badge_steady_rockstar.png',
+                desc: 'Attempted 3 or more assessments in a row without missing. You are rock steady!',
+                criteria: 'Attempt 3 or more assessments in a row without missing.',
+                check: (p) => p.streak >= 3,
+                progressText: (p) => {
+                    const left = 3 - p.streak;
+                    return `${p.streak}/3 in a row (${left} more to go!)`;
+                },
+                progressPercent: (p) => (p.streak / 3) * 100
+            },
+            {
+                id: 'all_star',
+                title: 'Excellent',
+                img: 'assets/badges/badge_assessment_all_star.png',
+                desc: 'Attempted all 6 assessments available. A true model of dedication!',
+                criteria: 'Attempt all 6 assessments in the program.',
+                check: (p) => p.assessmentsAttempted >= 6,
+                progressText: (p) => {
+                    const left = 6 - p.assessmentsAttempted;
+                    return `${p.assessmentsAttempted}/6 Attempts (${left} more to go!)`;
+                },
+                progressPercent: (p) => (p.assessmentsAttempted / 6) * 100
+            }
+        ];
+
+        function renderBadges() {
+            const grid = document.getElementById('badgeGrid');
+            grid.innerHTML = '';
+
+            // Sort badges: Unlocked first
+            const sortedBadges = [...badges].sort((a, b) => {
+                const aUnlocked = a.check(studentProfile);
+                const bUnlocked = b.check(studentProfile);
+                if (aUnlocked && !bUnlocked) return -1;
+                if (!aUnlocked && bUnlocked) return 1;
+                return 0;
+            });
+
+            sortedBadges.forEach(badge => {
+                const isUnlocked = badge.check(studentProfile);
+                const progressMsg = badge.progressText(studentProfile);
+                const percent = badge.progressPercent(studentProfile);
+
+                const card = document.createElement('div');
+                card.className = `badge-card ${isUnlocked ? '' : 'badge-locked'}`;
+
+                if (isUnlocked) {
+                    card.onclick = () => openModal(badge.title, badge.img, badge.desc);
+                }
+
+                card.innerHTML = `
+                    <div class="badge-img-container">
+                        <img src="${badge.img}" alt="${badge.title}" class="badge-img">
+                    </div>
+                    <div class="badge-title">${badge.title}</div>
+                    <div class="badge-status ${isUnlocked ? 'status-unlocked' : 'status-locked'}">
+                        ${isUnlocked ? 'UNLOCKED' : 'LOCKED'}
+                    </div>
+                    
+                    <div class="badge-criteria-container">
+                        <div class="criteria-text">${badge.criteria}</div>
+                        
+                        ${!isUnlocked ? `
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: ${percent}%"></div>
+                            </div>
+                            <div class="progress-text">${progressMsg}</div>
+                        ` : `
+                            <div class="badge-unlocked-msg">✨ Achievement Unlocked!</div>
+                        `}
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        renderBadges();
+
+        function openModal(title, imgSrc, desc) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('badgeModal').classList.add('active');
+            createConfetti();
+        }
+
+        function closeModal() {
+            document.getElementById('badgeModal').classList.remove('active');
+            document.getElementById('confettiContainer').innerHTML = '';
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            container.innerHTML = '';
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'];
+
+            for (let i = 0; i < 80; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = -Math.random() * 50 + 'px';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 10 + 6) + 'px';
+                confetti.style.height = (Math.random() * 10 + 6) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                container.appendChild(confetti);
+            }
+        }
+
+        document.getElementById('badgeModal').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+
+</html>

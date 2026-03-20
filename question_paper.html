@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Paper | NSF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #347363;
+            --color-secondary: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f0f4f8 radial-gradient(at 0% 0%, hsla(172, 65%, 85%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(177, 63%, 90%, 1) 0px, transparent 50%);
+            min-height: 100vh;
+            color: #334155;
+            padding-bottom: 50px;
+        }
+
+        .header {
+            background: rgba(52, 115, 99, 0.95);
+            backdrop-filter: blur(16px);
+            height: 80px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 0 40px;
+            color: white;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-center {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-align: center;
+            color: white;
+        }
+
+        .header-right {
+            text-align: right;
+            font-size: 0.9rem;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .paper-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .paper-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        .paper-meta {
+            display: flex;
+            gap: 30px;
+            margin-top: 10px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .question-num {
+            font-weight: 800;
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+
+        .question-img {
+            max-width: 300px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #f1f5f9;
+            display: block;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid #f1f5f9;
+            background: #f8fafc;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option.correct {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #166534;
+            position: relative;
+        }
+
+        .option.correct::after {
+            content: '✔';
+            margin-left: auto;
+        }
+
+        .scenario-box {
+            background: #f0f9ff;
+            border-left: 5px solid #0ea5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .scenario-title {
+            font-weight: 800;
+            color: #0369a1;
+            margin-bottom: 10px;
+        }
+
+        @media print {
+
+            .header,
+            .back-btn {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .question-card {
+                box-shadow: none !important;
+                border: 1px solid #eee !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-left">
+            <a href="perf.html" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back
+            </a>
+        </div>
+        <div class="header-center" id="pageTitle">Question Paper</div>
+        <div class="header-right"></div>
+    </header>
+
+    <div class="container">
+        <div class="paper-header">
+            <div>
+                <div class="paper-title" id="paperTitle">SODHANA Assessment 1</div>
+                <div class="paper-meta">
+                    <span id="subjectName">Subject: Mixed</span>
+                    <span id="qCount">No. of Questions: 20</span>
+                    <span id="tCredits">Total Credits: 40</span>
+                </div>
+            </div>
+            <button class="back-btn" style="background: var(--color-primary);" onclick="window.print()">Print
+                Paper</button>
+        </div>
+
+        <div id="questionsList">
+            <!-- Questions will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const subject = params.get('subject') || 'English';
+        const assessment = params.get('assessment') || 'SODHANA 1';
+
+        document.getElementById('pageTitle').textContent = assessment + ' Questions';
+        document.getElementById('paperTitle').textContent = assessment;
+        document.getElementById('subjectName').textContent = 'Subject: ' + subject;
+
+        const questionsData = {
+            'Mathematics': [
+                {
+                    num: 1,
+                    text: 'If yesterday was Wednesday, what day is today?',
+                    options: ['Monday', 'Tuesday', 'Thursday', 'Friday'],
+                    correct: 2,
+                    img: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=400' // Calendar
+                },
+                {
+                    num: 2,
+                    text: 'It is 9:15 PM. What would you do at this time?',
+                    options: ['Go to school', 'Have breakfast', 'Sleep', 'Play in park'],
+                    correct: 2,
+                    img: 'https://images.unsplash.com/photo-1511295742364-91191ca05cf4?auto=format&fit=crop&q=80&w=400' // Night sky/Sleeping
+                }
+            ],
+            'English': [
+                {
+                    isScenario: true,
+                    title: 'Scenario:',
+                    text: 'Read the passage and answer the questions that follow.\nThe sea is a vast body of salty water that covers most of our Earth. Its waves rise and fall, making a calming sound. Many fish, crabs, and other sea animals live in it. Ships and boats sail on the sea to carry people and goods. The sea also gives us food, salt, and cool breezes. It is beautiful but also very powerful.'
+                },
+                {
+                    num: 1,
+                    text: 'What type of water does the sea have?',
+                    options: ['Sweet', 'Salty', 'Fresh', 'Bitter'],
+                    correct: 1,
+                    img: 'https://images.unsplash.com/photo-1505118380757-91f5f45d8de4?auto=format&fit=crop&q=80&w=400' // Ocean waves
+                },
+                {
+                    num: 2,
+                    text: 'Which of these travels on the sea?',
+                    options: ['Cars', 'Trains', 'Boats', 'Bicycles'],
+                    correct: 2,
+                    img: 'https://images.unsplash.com/photo-1544606114-6178e22543b5?auto=format&fit=crop&q=80&w=400' // Boat/Ship
+                },
+                {
+                    num: 3,
+                    text: 'The sea is beautiful but also very ________.',
+                    options: ['Weak', 'Quiet', 'Small', 'Powerful'],
+                    correct: 3,
+                    img: 'https://images.unsplash.com/photo-1439405326854-014607f694d7?auto=format&fit=crop&q=80&w=400' // Powerful sea
+                }
+            ],
+            'Mixed': [] // Will combine if needed
+        };
+
+        // For "Mixed" (SODHANA/SAMAGRA usually cover multiple subjects)
+        if (subject === 'Mixed') {
+            questionsData['Mixed'] = [...questionsData['English'], ...questionsData['Mathematics']];
+            document.getElementById('qCount').textContent = 'No. of Questions: 40';
+            document.getElementById('tCredits').textContent = 'Total Credits: 80';
+        }
+
+        function renderQuestions() {
+            const list = document.getElementById('questionsList');
+            const data = questionsData[subject] || questionsData['Mixed'];
+
+            data.forEach(q => {
+                if (q.isScenario) {
+                    const box = document.createElement('div');
+                    box.className = 'scenario-box';
+                    box.innerHTML = `<div class="scenario-title">${q.title}</div><div class="question-text">${q.text}</div>`;
+                    list.appendChild(box);
+                } else {
+                    const card = document.createElement('div');
+                    card.className = 'question-card';
+
+                    let html = `<div class="question-num">Question ${q.num}:</div>`;
+                    if (q.img) html += `<img src="${q.img}" class="question-img" alt="" onerror="this.style.display='none'">`;
+                    html += `<div class="question-text">${q.text}</div>`;
+
+                    html += `<div class="options-grid">`;
+                    q.options.forEach((opt, i) => {
+                        const isCorrect = i === q.correct;
+                        html += `<div class="option ${isCorrect ? 'correct' : ''}">${String.fromCharCode(65 + i)}) ${opt}</div>`;
+                    });
+                    html += `</div>`;
+
+                    card.innerHTML = html;
+                    list.appendChild(card);
+                }
+            });
+        }
+
+        renderQuestions();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSF Competency Program (NCP)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nsf-green: #246E49; /* Darker NSF Green from screenshot */
+            --nsf-light-green: #E8F5E9; /* Header Background */
+            --accent-blue: #0288D1;
+            --text-dark: #333;
+            --text-meta: #666;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
+
+        body {
+            background-color: #F0F8FF;
+            /* Simulating the 'doodle' background from your screenshots */
+            background-image: radial-gradient(#246E49 0.5px, transparent 0.5px), radial-gradient(#246E49 0.5px, #F0F8FF 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            background-blend-mode: overlay;
+            opacity: 0.99; /* Fix for blend mode rendering */
+            min-height: 100vh;
+        }
+
+        /* ========================
+           LOGIN PAGE STYLES
+           (Based on image_3ed2ba.jpg)
+           ======================== */
+        #login-view {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            overflow: hidden;
+        }
+
+        .login-image {
+            width: 50%;
+            background-color: var(--nsf-green);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Abstract representation of the school kids illustration */
+        .login-illustration {
+            font-size: 5rem;
+            color: rgba(255,255,255,0.2);
+            text-align: center;
+        }
+
+        .login-form-container {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: #EAF0F6;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .login-btn {
+            background-color: var(--nsf-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        .login-btn:hover { background-color: #1b5236; }
+
+        /* ========================
+           DASHBOARD STYLES
+           (Layout from image_3ed2dc.jpg / Features from Redesign)
+           ======================== */
+        #dashboard-view {
+            display: none; /* Hidden by default */
+        }
+
+        /* 1. The Specific NSF Header */
+        .nsf-header {
+            background-color: var(--nsf-light-green);
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #c8e6c9;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--nsf-green);
+            font-size: 1.1rem;
+        }
+
+        .header-center {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #5C6BC0; /* The blue school name color */
+            text-align: center;
+        }
+
+        .header-right {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            line-height: 1.3;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-icon {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            cursor: pointer;
+        }
+
+        /* 2. Main Content Area */
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .welcome-bar {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid var(--nsf-green);
+        }
+
+        .welcome-text h2 { color: var(--nsf-green); font-size: 1.4rem; }
+        .welcome-text p { color: var(--text-meta); font-size: 0.95rem; margin-top: 5px; }
+
+        .action-btn {
+            background: linear-gradient(135deg, #43A047, #2E7D32);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(46, 125, 50, 0.3);
+        }
+
+        /* 3. The Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .panel {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+
+        .panel-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: var(--nsf-green);
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Feature: Mission Path */
+        .mission-step {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #fafafa;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .mission-step.active {
+            background: #FFFDE7;
+            border: 1px solid #FBC02D;
+        }
+
+        .step-icon { font-size: 1.5rem; margin-right: 15px; }
+        .step-info h4 { font-size: 0.95rem; margin-bottom: 2px; }
+        .step-info span { font-size: 0.8rem; color: #777; }
+
+        /* Feature: Skill Bars */
+        .skill-row { margin-bottom: 15px; }
+        .skill-meta { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; font-weight: 600; }
+        .bar-bg { background: #eee; height: 10px; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 10px; }
+        
+        /* Feature: Trophy Cabinet */
+        .trophy-case {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .trophy {
+            background: #f9f9f9;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        .trophy-icon { font-size: 2rem; display: block; margin-bottom: 5px; }
+        .trophy-name { font-size: 0.8rem; font-weight: 700; color: #555; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-card { flex-direction: column; height: auto; }
+            .login-image, .login-form-container { width: 100%; }
+            .login-image { height: 150px; }
+            .nsf-header { flex-direction: column; text-align: center; gap: 10px; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-view">
+        <div class="login-card">
+            <div class="login-image">
+                <div class="login-illustration">
+                    🎓✏️
+                    <p style="font-size:1rem; color:white; margin-top:10px;">North South Foundation</p>
+                </div>
+            </div>
+            <div class="login-form-container">
+                <h2 class="login-title">NORTH SOUTH FOUNDATION</h2>
+                <form onsubmit="event.preventDefault(); switchView();">
+                    <div class="input-group">
+                        <input type="text" placeholder="User ID (e.g., 8042570055)" value="8042570055">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" placeholder="Password" value="8042570055">
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                    <p style="text-align: center; margin-top: 15px; color: #888; font-size: 0.8rem;">
+                        Secure Student Login
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-view">
+        <header class="nsf-header">
+            <div class="header-left">
+                <span>✏️ NSF Competency Program (NCP)</span>
+            </div>
+            <div class="header-center">
+                MPPS Inmulnarva
+            </div>
+            <div class="header-right">
+                <strong>E Bhavani</strong><br>
+                <span style="font-size:0.75rem; color:#666;">Last Login: 9th Feb 2026</span>
+                <span class="logout-icon" onclick="location.reload()" title="Logout">↪</span>
+            </div>
+        </header>
+
+        <div class="main-container">
+            
+            <div class="welcome-bar">
+                <div class="welcome-text">
+                    <h2>Hi, Bhavani! 👋</h2>
+                    <p>You have an assessment ready. Let's learn something new!</p>
+                </div>
+                <a href="#" class="action-btn">▶ Start SODHANA</a>
+            </div>
+
+            <div class="feature-grid">
+                
+                <div class="left-col">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <span>Your Learning Journey</span>
+                            <span>2025-26 ▼</span>
+                        </div>
+                        
+                        <div class="mission-step">
+                            <div class="step-icon">✅</div>
+                            <div class="step-info">
+                                <h4>Sadhana Assessment</h4>
+                                <span>Completed • 24 Jul 2025</span>
+                            </div>
+                        </div>
+
+                        <div class="mission-step active">
+                            <div class="step-icon">⏳</div>
+                            <div class="step-info">
+                                <h4>Sodhana Assessment</h4>
+                                <span><strong>Open Now</strong> • Due Feb 14</span>
+                            </div>
+                        </div>
+
+                        <div class="mission-step" style="opacity: 0.6;">
+                            <div class="step-icon">🔒</div>
+                            <div class="step-info">
+                                <h4>Samagra Assessment</h4>
+                                <span>Unlocks after Sodhana</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <span>Performance Report</span>
+                            <span style="font-size:0.8rem; background:#E8F5E9; padding:2px 8px; border-radius:4px; color:green;">Excel Export Hidden</span>
+                        </div>
+
+                        <div class="skill-row">
+                            <div class="skill-meta">
+                                <span>Mathematics</span>
+                                <span style="color:#2E7D32;">Great! (G4)</span>
+                            </div>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 80%; background: #42A5F5;"></div></div>
+                        </div>
+
+                        <div class="skill-row">
+                            <div class="skill-meta">
+                                <span>English</span>
+                                <span style="color:#FFA000;">Needs Practice (G1)</span>
+                            </div>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 30%; background: #FFA726;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-col">
+                    <div class="panel">
+                        <div class="panel-header">My Rewards</div>
+                        <div class="trophy-case">
+                            <div class="trophy">
+                                <span class="trophy-icon">🥇</span>
+                                <span class="trophy-name">Math Star</span>
+                            </div>
+                            <div class="trophy">
+                                <span class="trophy-icon">🚀</span>
+                                <span class="trophy-name">Fast Learner</span>
+                            </div>
+                            <div class="trophy" style="opacity:0.5;">
+                                <span class="trophy-icon">❓</span>
+                                <span class="trophy-name">Locked</span>
+                            </div>
+                            <div class="trophy" style="opacity:0.5;">
+                                <span class="trophy-icon">❓</span>
+                                <span class="trophy-name">Locked</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel" style="background:#E3F2FD; border:1px solid #BBDEFB;">
+                        <div class="panel-header" style="color:#1565C0; border-bottom-color:#BBDEFB;">Notice Board</div>
+                        <ul style="font-size:0.85rem; padding-left:20px; color:#333;">
+                            <li style="margin-bottom:8px;">Upcoming Sodhana 1 scheduled for Feb 9.</li>
+                            <li>Download your answer sheets from the Profile menu.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchView() {
+            // Simple transition effect
+            document.getElementById('login-view').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('dashboard-view').style.display = 'block';
+                // Trigger animation
+                document.getElementById('dashboard-view').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('dashboard-view').style.transition = 'opacity 0.5s';
+                    document.getElementById('dashboard-view').style.opacity = '1';
+                }, 50);
+            }, 200);
+        }
+    </script>
+
+</body>
+</html>

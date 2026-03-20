@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance | NSF</title>
+    <!-- Use Inter font for professional look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* REUSING VARIABLES & STYLES FROM stu5.html for CONSISTENCY */
+        :root {
+            --color-primary: #347363;
+            --color-secondary: #0f172a;
+            --color-accent-teal: #26A69A;
+
+            /* High Contrast "Hyper-Glass" Tints */
+            --glass-teal: linear-gradient(135deg, rgba(224, 242, 241, 0.95), rgba(255, 255, 255, 0.9));
+            --glass-primary: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(255, 255, 255, 0.9));
+            --glass-white: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+
+            /* Pronounced Borders & Shadows */
+            --glass-border: 2px solid rgba(255, 255, 255, 1);
+            --glass-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            min-height: 100vh;
+            color: #334155;
+            background:
+                radial-gradient(at 0% 0%, hsla(172, 65%, 85%, 1) 0px, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(230, 45%, 92%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(177, 63%, 90%, 1) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(260, 50%, 95%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 50%, hsla(172, 65%, 88%, 1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(230, 45%, 92%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(177, 63%, 90%, 1) 0px, transparent 50%);
+            background-size: 150% 150%;
+            animation: meshFlow 25s ease infinite alternate;
+        }
+
+        @keyframes meshFlow {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            background: rgba(52, 115, 99, 0.95);
+            backdrop-filter: blur(16px);
+            height: 80px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 0 40px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-2px);
+        }
+
+        .header-center {
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #fff, #e2e8f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .header-right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* CONTENT */
+        .page-content {
+            padding: 40px 0;
+        }
+
+        /* NEW TABLE LAYOUT STYLES */
+
+        /* 1. Master Header Strip */
+        .master-header {
+            display: grid;
+            grid-template-columns: 0.8fr 1fr 1.2fr 1.2fr 1.2fr;
+            background: #005fbed1;
+            /* Specific info blue from screenshot */
+            background: var(--color-primary);
+            /* Using theme primary for consistency */
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0;
+            /* Rounded top only */
+            margin-bottom: 0px;
+            /* Connects visually if cards push up */
+            color: white;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 2. Assessment Sections (Cards) */
+        .assessment-section {
+            background: white;
+            border: 2px solid white;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            /* Softer shadow */
+            margin-bottom: 25px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .section-title {
+            padding: 15px 20px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #334155;
+            border-bottom: 1px solid #f1f5f9;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 3. Data Rows */
+        .data-row {
+            display: grid;
+            grid-template-columns: 0.8fr 1fr 1.2fr 1.2fr 1.2fr;
+            padding: 15px 20px;
+            align-items: center;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #475569;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s;
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-row:hover {
+            background: #f8fafc;
+        }
+
+        /* Links */
+        .action-link {
+            color: #3b82f6;
+            /* Link Blue */
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .action-link:hover {
+            color: #2563eb;
+        }
+
+        .status-absent {
+            color: #64748b;
+        }
+
+        /* Empty State */
+        .no-data {
+            padding: 30px;
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 1000px) {
+
+            .master-header,
+            .data-row {
+                grid-template-columns: repeat(5, 140px);
+                /* Horizontal scroll */
+                overflow-x: auto;
+            }
+
+            .container {
+                overflow-x: auto;
+            }
+        }
+
+        /* Year Dropdown Style */
+        .year-dropdown {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 2px solid transparent;
+            background-color: white;
+            font-weight: 700;
+            color: var(--color-primary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23347363' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .year-dropdown:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(52, 115, 99, 0.15);
+        }
+
+        .year-dropdown:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(52, 115, 115, 0.1);
+        }
+
+        /* SVG CHART STYLES for CONSISTENCY */
+        .line-chart-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .chart-line {
+            fill: none;
+            stroke: var(--color-primary);
+            stroke-width: 3px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .chart-label-group {
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            transform: translateY(5px);
+        }
+
+        .chart-container:hover .chart-label-group {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <a href="stu5.html?view=dashboard" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back
+            </a>
+        </div>
+        <div class="header-center">Student Performance</div>
+        <div class="header-right">
+            <span style="font-weight:700; font-size:1.1rem;">ID: 8042570055</span>
+            <select class="year-dropdown">
+                <option value="2025-26">2025-26</option>
+                <option value="2024-25">2024-25</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="container page-content">
+
+        <!-- Overall Performance Trends Removed as per user request -->
+
+        <!-- MASTER HEADER ROW -->
+        <div class="master-header">
+            <div>Assessment No</div>
+            <div>Date</div>
+            <div>Performance Analysis</div>
+            <div>Question Paper</div>
+            <div>Report Card</div>
+        </div>
+
+        <!-- 1. SODHANA SECTION -->
+        <div class="assessment-section glass-panel">
+            <div class="section-title">SODHANA</div>
+
+            <div class="data-row">
+                <div>2</div>
+                <div>05 Dec 2025</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+            </div>
+
+            <div class="data-row" style="background:rgba(236, 253, 245, 0.4);">
+                <!-- Slight tint for recent -->
+                <div>1</div>
+                <div>30 Aug 2025</div>
+                <div><span class="action-link" onclick="window.location.href='report.html'">View</span></div>
+                <div><span class="action-link"
+                        onclick="window.location.href='question_paper.html?subject=Mixed&assessment=SODHANA+1'">View</span>
+                </div>
+                <div><span class="action-link"
+                        onclick="window.location.href='mock_report.html?assessment=SODHANA+1&date=30+Aug+2025'">View</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. SADHANA SECTION -->
+        <div class="assessment-section glass-panel">
+            <div class="section-title">SADHANA</div>
+
+            <div class="data-row">
+                <div>4</div>
+                <div>26 Dec 2025</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+            </div>
+
+            <div class="data-row">
+                <div>3</div>
+                <div>14 Nov 2025</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+            </div>
+
+            <div class="data-row">
+                <div>2</div>
+                <div>24 Jul 2025</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+            </div>
+
+            <div class="data-row">
+                <div>1</div>
+                <div>12 Jul 2025</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+                <div class="status-absent">Absent</div>
+            </div>
+        </div>
+
+        <!-- 3. SAMAGRA SECTION -->
+        <div class="assessment-section glass-panel">
+            <div class="section-title">SAMAGRA</div>
+
+            <div class="data-row">
+                <div>1</div>
+                <div>08 Sep 2025</div>
+                <div><span class="action-link" onclick="window.location.href='samagra_report.html'">View</span></div>
+                <div><span class="action-link"
+                        onclick="window.location.href='question_paper.html?subject=Mixed&assessment=SAMAGRA+1'">View</span>
+                </div>
+                <div><span class="action-link"
+                        onclick="window.location.href='mock_report.html?assessment=SAMAGRA+1&date=08+Sep+2025'">View</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

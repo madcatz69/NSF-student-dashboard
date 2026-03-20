@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSF Student Companion - Redesign Concept</title>
+    <style>
+        :root {
+            --nsf-green: #2E7D58; /* Based on your screenshots */
+            --nsf-light-green: #E8F5E9;
+            --accent-yellow: #FFC107;
+            --accent-red: #E53935;
+            --accent-blue: #1E88E5;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: var(--text-dark);
+            padding-bottom: 80px; /* Space for mobile nav if needed */
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--white);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: var(--nsf-green);
+            font-size: 1.2rem;
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .lang-toggle {
+            background: var(--nsf-light-green);
+            color: var(--nsf-green);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: 1px solid var(--nsf-green);
+            font-weight: 600;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 25px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--nsf-green), #1b5e40);
+            color: white;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+        }
+
+        .hero p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 800px; /* Constrain width for better readability */
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* --- ACTIVE TASK CARD (The "Do This Now" Section) --- */
+        .task-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            border-left: 6px solid var(--accent-yellow);
+            position: relative;
+            top: -15px; /* Overlap with hero */
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            background: #FFF8E1;
+            color: #F57F17;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--nsf-green);
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* --- GRID MENU (Replaces the 6 confusing boxes) --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .menu-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--nsf-green);
+        }
+
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .menu-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .menu-sub {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* --- REPORT CARD SECTION --- */
+        .section-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            border-left: 4px solid var(--nsf-green);
+            padding-left: 10px;
+        }
+
+        .report-summary {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .subject-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .subject-row:last-child {
+            border-bottom: none;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grade-pill {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .grade-good { background: #E8F5E9; color: #2E7D58; } /* Green */
+        .grade-avg { background: #FFF8E1; color: #F57F17; } /* Yellow */
+        .grade-poor { background: #FFEBEE; color: #C62828; } /* Red */
+
+        /* --- BADGES (Gamification) --- */
+        .badge-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .badge-item {
+            min-width: 100px;
+            background: white;
+            border-radius: var(--radius);
+            padding: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 2px solid #FFD700;
+        }
+        
+        .badge-locked {
+            filter: grayscale(1);
+            opacity: 0.6;
+            border-color: #ccc;
+        }
+
+        /* Helper classes for the mockup */
+        .hidden { display: none; }
+        
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <span class="logo-icon">✏️</span> NSF NCL
+        </div>
+        <div class="header-controls">
+            <button class="lang-toggle" onclick="toggleLanguage()">English ⇄ తెలుగు</button>
+            <div class="profile-pic">EB</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Namaste, E Bhavani!</h1>
+        <p>Govt High School, Inmulnarva</p>
+    </section>
+
+    <div class="container">
+        
+        <div class="task-card">
+            <div class="task-header">
+                <div>
+                    <h3 style="margin-bottom: 5px;">Next Mission: SODHANA</h3>
+                    <p style="font-size: 0.9rem; color: #666;">Due Date: Feb 14, 2026</p>
+                </div>
+                <span class="status-badge">Active Now</span>
+            </div>
+            <p style="margin-bottom: 15px; font-size: 0.95rem;">
+                Ready to show your skills? This test has 20 questions. Good luck!
+            </p>
+            <button class="btn-primary" onclick="alert('Starting Assessment Mode... (This would launch the full screen test)')">
+                ▶ Start Test
+            </button>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-card">
+                <span class="icon">📊</span>
+                <div class="menu-title">My Report Card</div>
+                <div class="menu-sub">See your scores</div>
+            </div>
+            
+            <div class="menu-card">
+                <span class="icon">🎮</span>
+                <div class="menu-title">Fun Practice</div>
+                <div class="menu-sub">Quiz yourself</div>
+            </div>
+
+            <div class="menu-card">
+                <span class="icon">🏆</span>
+                <div class="menu-title">My Rewards</div>
+                <div class="menu-sub">3 Badges earned</div>
+            </div>
+        </div>
+
+        <h3 class="section-title">Your Progress (Last Assessment)</h3>
+        <div class="report-summary">
+            <div class="subject-row">
+                <div class="subject-name">🧮 Mathematics</div>
+                <div class="grade-pill grade-avg">Needs Practice</div>
+            </div>
+            <div class="subject-row">
+                <div class="subject-name">📖 English</div>
+                <div class="grade-pill grade-good">Excellent! ⭐</div>
+            </div>
+            <div class="subject-row">
+                <div class="subject-name">🔬 Science</div>
+                <div class="grade-pill grade-good">Very Good</div>
+            </div>
+        </div>
+        <br>
+
+        <h3 class="section-title">Trophy Cabinet</h3>
+        <div class="badge-container">
+            <div class="badge-item">
+                <div style="font-size: 2rem;">🥇</div>
+                <div style="font-size: 0.8rem; font-weight: bold; margin-top:5px;">Sadhana 1</div>
+            </div>
+            <div class="badge-item">
+                <div style="font-size: 2rem;">🌟</div>
+                <div style="font-size: 0.8rem; font-weight: bold; margin-top:5px;">English Star</div>
+            </div>
+            <div class="badge-item badge-locked">
+                <div style="font-size: 2rem;">🔒</div>
+                <div style="font-size: 0.8rem; font-weight: bold; margin-top:5px;">Math Whiz</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Simple script to demonstrate Language Toggle interaction
+        let isEnglish = true;
+        
+        function toggleLanguage() {
+            const btn = document.querySelector('.btn-primary');
+            const welcome = document.querySelector('.hero h1');
+            const sub = document.querySelector('.hero p');
+            
+            if(isEnglish) {
+                // Switch to Telugu (Mockup)
+                welcome.innerText = "నమస్కారం, ఇ భవాని!";
+                sub.innerText = "ప్రభుత్వ ఉన్నత పాఠశాల, ఇన్ముల్నార్వ";
+                btn.innerText = "▶ పరీక్షను ప్రారంభించండి";
+                isEnglish = false;
+            } else {
+                // Switch back to English
+                welcome.innerText = "Namaste, E Bhavani!";
+                sub.innerText = "Govt High School, Inmulnarva";
+                btn.innerText = "▶ Start Test";
+                isEnglish = true;
+            }
+        }
+    </script>
+</body>
+</html>
